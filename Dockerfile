@@ -8,10 +8,11 @@ RUN yum install -y openssh-server sudo tar wget
 # generate SSH keys on first run
 RUN /etc/init.d/sshd start
 
+RUN sed -i 's/.*requiretty$/Defaults !requiretty/' /etc/sudoers
+
 RUN groupadd vagrant && \
     useradd vagrant -g vagrant -G wheel && \
     echo "vagrant:vagrant" | chpasswd && \
-    echo "Defaults !requiretty" >> /etc/sudoers.d/vagrant && \
     echo "vagrant   ALL=(ALL)   NOPASSWD: ALL" >> /etc/sudoers.d/vagrant && \
     chmod 0440 /etc/sudoers.d/vagrant
 
