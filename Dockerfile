@@ -10,6 +10,9 @@ RUN /etc/init.d/sshd start
 
 RUN sed -i 's/.*requiretty$/Defaults !requiretty/' /etc/sudoers
 
+# SSH login fix to avoid user getting kicked off after login on some docker hosts
+RUN sed 's@session\s+required\s+pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
 RUN groupadd vagrant && \
     useradd vagrant -g vagrant -G wheel && \
     echo "vagrant:vagrant" | chpasswd && \
