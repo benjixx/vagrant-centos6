@@ -1,9 +1,9 @@
 FROM centos:centos6
 MAINTAINER Benjamin Schwarze <benjamin.schwarze@mailboxd.de>
 
-RUN yum update -y
+RUN yum update -y; yum clean all
 
-RUN yum install -y openssh-server sudo tar wget
+RUN yum install -y openssh-server sudo tar wget; yum clean all
 
 # generate SSH keys on first run
 RUN /etc/init.d/sshd start
